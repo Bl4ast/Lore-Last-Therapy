@@ -2,8 +2,8 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquivo Psiquiátrico 1938 - C. Valadares</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Arquivo Cass- C. Valadares</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,13 +25,14 @@
             min-height: 100vh;
             margin: 0;
             font-family: 'Special Elite', monospace;
-            overflow: hidden;
+            overflow: hidden; /* Mantém a ficha fixa */
+            touch-action: manipulation;
         }
 
-        /* Container do Papel */
+        /* Container do Papel - Responsivo */
         .document-container {
             position: relative;
-            width: 90vw;
+            width: 95vw;
             max-width: 800px;
             height: 90vh;
             max-height: 900px;
@@ -45,7 +46,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            padding: 50px 60px;
+            padding: 30px 25px; /* Padding menor para mobile */
             box-shadow: -10px 10px 40px rgba(0,0,0,0.8);
             border: 1px solid rgba(0,0,0,0.2);
             display: flex;
@@ -53,8 +54,15 @@
             opacity: 0;
             visibility: hidden;
             transform-origin: left center;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, visibility 0.8s;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
             z-index: 10;
+        }
+
+        /* Ajuste de padding para telas maiores */
+        @media (min-width: 768px) {
+            .paper-sheet {
+                padding: 50px 60px;
+            }
         }
 
         /* Textura de papel MUITO sujo e envelhecido */
@@ -76,7 +84,7 @@
         .paper-sheet.active {
             opacity: 1;
             visibility: visible;
-            transform: translateX(0) rotate(0deg);
+            transform: translateX(0);
             z-index: 30;
         }
 
@@ -91,8 +99,8 @@
         .form-header {
             text-align: center;
             border: 2px solid var(--border-color);
-            padding: 10px;
-            margin-bottom: 20px;
+            padding: 8px;
+            margin-bottom: 15px;
             text-transform: uppercase;
             background: rgba(0,0,0,0.05);
         }
@@ -101,25 +109,30 @@
             width: 100%;
             border: 2px solid var(--border-color);
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            table-layout: fixed; /* Evita quebra de layout */
         }
 
         .admission-table td {
             border: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 6px;
             vertical-align: top;
+            word-wrap: break-word;
         }
 
         .photo-cell {
-            width: 140px;
-            height: 170px;
+            width: 100px;
             text-align: center;
             background: rgba(0,0,0,0.05);
         }
 
+        @media (min-width: 640px) {
+            .photo-cell { width: 140px; }
+        }
+
         .photo-box {
-            width: 120px;
-            height: 150px;
+            width: 80px;
+            height: 100px;
             margin: 0 auto;
             border: 1px solid #444;
             background: #222;
@@ -127,7 +140,10 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: inset 0 0 10px #000;
+        }
+
+        @media (min-width: 640px) {
+            .photo-box { width: 120px; height: 150px; }
         }
 
         .photo-box img {
@@ -135,47 +151,56 @@
             height: 100%;
             object-fit: cover;
             filter: sepia(0.8) contrast(1.2) grayscale(0.4);
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         .field-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: bold;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             color: #333;
             text-transform: uppercase;
         }
 
         .field-value {
             font-family: 'Special Elite', monospace;
-            font-size: 1rem;
+            font-size: 0.85rem;
             color: var(--ink-black);
             font-weight: bold;
+            line-height: 1.1;
+        }
+
+        @media (min-width: 640px) {
+            .field-value { font-size: 1rem; }
         }
 
         .lore-box {
             border: 1px solid var(--border-color);
-            padding: 15px;
+            padding: 12px;
             flex-grow: 1;
             background: rgba(0,0,0,0.03);
             position: relative;
-            overflow: hidden;
+            overflow-y: auto; /* Permite scroll interno se o texto for gigante */
         }
 
         /* Tipografia */
         .typewriter {
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: justify;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+        }
+
+        @media (min-width: 640px) {
+            .typewriter { font-size: 0.95rem; }
         }
 
         /* Carimbos */
         .stamp {
             font-family: 'Special Elite', monospace;
             color: var(--stamp-red);
-            border: 4px solid var(--stamp-red);
-            padding: 5px 15px;
+            border: 3px solid var(--stamp-red);
+            padding: 4px 10px;
             font-weight: bold;
             text-transform: uppercase;
             position: absolute;
@@ -183,30 +208,35 @@
             mix-blend-mode: multiply;
             z-index: 60;
             pointer-events: none;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             border-radius: 4px;
         }
 
         /* Navegação */
         .nav-controls {
             position: absolute;
-            bottom: 20px;
+            bottom: 15px;
             left: 0; right: 0;
             display: flex;
             justify-content: space-between;
-            padding: 0 40px;
+            padding: 0 15px;
             z-index: 100;
         }
 
+        @media (min-width: 768px) {
+            .nav-controls { padding: 0 40px; bottom: 20px; }
+        }
+
         .nav-btn {
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.15);
             border: 1px solid var(--ink-black);
-            padding: 6px 15px;
+            padding: 10px 15px;
             cursor: pointer;
             font-family: 'Special Elite', monospace;
             transition: 0.2s;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
+            border-radius: 2px;
         }
 
         .nav-btn:hover:not(:disabled) {
@@ -219,7 +249,7 @@
             cursor: not-allowed;
         }
 
-        /* Manchas de Humidade e Sujeira */
+        /* Manchas */
         .stain {
             position: absolute;
             background: radial-gradient(circle, rgba(90, 60, 30, 0.4) 0%, transparent 70%);
@@ -241,7 +271,7 @@
 
         <div class="nav-controls">
             <button id="prevBtn" class="nav-btn" disabled>« Voltar</button>
-            <span id="pageCounter" class="text-[10px] self-center opacity-40 font-bold">CARREGANDO...</span>
+            <span id="pageCounter" class="text-[9px] self-center opacity-50 font-bold">CARREGANDO...</span>
             <button id="nextBtn" class="nav-btn">Próxima »</button>
         </div>
     </div>
@@ -257,21 +287,18 @@
             oficio: "Fotógrafo",
             data: "14.11.1948",
             processo: "REG-772/C",
-            foto_url: "7fef63196f6424e03349a886e6367e15.jpg", // Insira o link da foto entre as aspas
+            foto_url: "", // Ex: "image_cb75a0.jpg" ou um link da internet
 
-            // CONTEÚDO DAS PÁGINAS (Edite os textos aqui)
             paginas: [
                 {
                     titulo: "REGISTRO DE ADMISSÃO",
                     carimbo: "GERAL",
-                    resumo_relatorio: 
-                    "Não sei oq escrever aqui ainda."
+                    resumo_relatorio: "Paciente encontrado em estado de transe criativo. Relata que o mundo perde a definição humana, restando apenas os cenários. Desenvolveu uma obsessão por fotografia para tentar 'revelar' as identidades que seu cérebro deleta sistematicamente das memórias recentes."
                 },
                 {
                     titulo: "LORE E ANTECEDENTES",
                     carimbo: "LORE",
-                    lore: 
-                    "To pensando"
+                    lore: "Nascido numa família de relojoeiros, Cassiano sempre teve fascínio por mecanismos que ele não conseguia explicar. Aos 19 anos, após um incidente numa revelação fotográfica, começou a reportar que as pessoas nas suas fotos (e na sua vida) estavam 'sumindo', deixando apenas o cenário para trás. Atualmente, ele vaga por prédios abandonados em busca do 'gosto perfeito', uma mistura de perigo e nostalgia que ele só sente quando está prestes a cometer um ato puramente impulsivo."
                 },
                 {
                     titulo: "ANÁLISE DE CONDIÇÕES",
@@ -290,15 +317,15 @@
                 {
                     titulo: "PARECER FINAL",
                     carimbo: "ARQUIVADO",
-                    parecer_medico: 
-                    "Vou colocar algo bem criativo aqui!",
+                    parecer_medico: "O paciente deve ser mantido sob vigilância passiva. A sua 'Ancoragem' só ocorre através de nomes próprios. Se Cassiano nomear alguém, essa pessoa deve ser tratada como o seu ponto de retorno à realidade humana.",
+                    medico_nome: "Dr. Álvaro Nogueira",
                     conselho: "CONSELHO DE NEUROLOGIA"
                 }
             ]
         };
 
         /* ============================================================
-           LÓGICA DO SISTEMA - NÃO PRECISA MEXER ABAIXO
+           LÓGICA DO SISTEMA
            ============================================================ */
         let current = 0;
 
@@ -307,96 +334,88 @@
             const pagesHtml = CONFIG.paginas.map((p, i) => {
                 let innerContent = "";
 
-                // Página 1: Tabela de Admissão
                 if (i === 0) {
                     innerContent = `
                         <div class="form-header">
-                            <h1 class="text-lg font-bold">${CONFIG.hospital}</h1>
-                            <p class="text-[10px]">DEPARTAMENTO DE PESQUISA COGNITIVA</p>
+                            <h1 class="text-sm sm:text-lg font-bold">${CONFIG.hospital}</h1>
+                            <p class="text-[8px] sm:text-[10px]">DEP. DE PESQUISA COGNITIVA</p>
                         </div>
                         <table class="admission-table">
                             <tr>
-                                <td rowspan="3" class="photo-cell">
+                                <td rowspan="2" class="photo-cell">
                                     <div class="photo-box">
-                                        ${CONFIG.foto_url ? `<img src="${CONFIG.foto_url}" alt="Foto">` : '<span class="text-[10px] text-gray-600 uppercase">RETRATO<br>Nº 772</span>'}
+                                        ${CONFIG.foto_url ? `<img src="${CONFIG.foto_url}" alt="Foto">` : '<span class="text-[8px] text-gray-600 uppercase">RETRATO<br>Nº 772</span>'}
                                     </div>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <span class="field-label">Paciente</span>
                                     <span class="field-value">${CONFIG.paciente}</span>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td>
-                                    <span class="field-label">ID Proc.</span>
+                                    <span class="field-label">Proc.</span>
                                     <span class="field-value">${CONFIG.processo}</span>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <span class="field-label">Idade</span>
-                                    <span class="field-value">${CONFIG.idade} Anos</span>
-                                </td>
-                                <td>
-                                    <span class="field-label">Emissão</span>
-                                    <span class="field-value">${CONFIG.data}</span>
+                                    <span class="field-value">${CONFIG.idade}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <span class="field-label">Ofício Declarado</span>
+                                <td colspan="3">
+                                    <span class="field-label">Ofício / Profissão</span>
                                     <span class="field-value">${CONFIG.oficio}</span>
                                 </td>
                             </tr>
                         </table>
                         <div class="lore-box">
                             <span class="field-label italic underline">RELATÓRIO DE CAMPO</span>
-                            <div class="typewriter text-xs mt-2">${p.resumo_relatorio}</div>
+                            <div class="typewriter mt-1">${p.resumo_relatorio}</div>
                         </div>`;
                 } 
-                // Página 2: Lore
                 else if (i === 1) {
                     innerContent = `
-                        <div class="form-header"><h2 class="text-md font-bold">HISTÓRICO COMPLEMENTAR</h2></div>
+                        <div class="form-header"><h2 class="text-sm font-bold">HISTÓRICO COMPLEMENTAR</h2></div>
                         <div class="lore-box">
-                            <div class="typewriter text-sm">${p.lore}</div>
+                            <div class="typewriter">${p.lore}</div>
                         </div>`;
                 } 
-                // Página 3: Condições
                 else if (i === 2) {
                     innerContent = `
-                        <div class="form-header"><h2 class="text-md font-bold">DISFUNÇÕES ESPECÍFICAS</h2></div>
-                        <div class="space-y-4 typewriter text-sm">
+                        <div class="form-header"><h2 class="text-sm font-bold">DISFUNÇÕES ESPECÍFICAS</h2></div>
+                        <div class="space-y-3 typewriter">
                             ${p.diagnosticos.map(d => `
-                                <div class="border-b border-black pb-2">
+                                <div class="border-b border-black/20 pb-2">
                                     <span class="field-label">${d.nome}</span>
-                                    <p>${d.desc}</p>
+                                    <p class="text-xs sm:text-sm">${d.desc}</p>
                                 </div>`).join('')}
                         </div>`;
                 } 
-                // Página 4: Parecer
                 else if (i === 3) {
                     innerContent = `
-                        <div class="form-header"><h2 class="text-md font-bold">CONSIDERAÇÕES MÉDICAS</h2></div>
+                        <div class="form-header"><h2 class="text-sm font-bold">CONSIDERAÇÕES MÉDICAS</h2></div>
                         <div class="lore-box">
-                            <p class="typewriter text-sm italic">${p.parecer_medico}</p>
+                            <p class="typewriter italic">${p.parecer_medico}</p>
                         </div>
-                        <div class="mt-16 flex justify-between items-end">
+                        <div class="mt-8 sm:mt-16 flex justify-between items-end">
                             <div class="text-center">
-                                <div class="w-32 border-b border-black mb-1"></div>
-                                <span class="field-label">RUBRICA DO PACIENTE</span>
+                                <div class="w-20 sm:w-32 border-b border-black mb-1"></div>
+                                <span class="field-label text-[8px]">RUBRICA PACIENTE</span>
                             </div>
                             <div class="text-center">
-                                <p class="font-serif italic text-sm mb-1">${p.medico_nome}</p>
-                                <div class="w-40 border-b border-black mb-1"></div>
-                                <span class="field-label">${p.conselho}</span>
+                                <p class="font-serif italic text-[10px] sm:text-sm mb-1">${p.medico_nome || 'Médico Responsável'}</p>
+                                <div class="w-24 sm:w-40 border-b border-black mb-1"></div>
+                                <span class="field-label text-[8px]">${p.conselho}</span>
                             </div>
                         </div>`;
                 }
 
                 return `
                     <div class="paper-sheet ${i === 0 ? 'active' : ''}" id="p-${i}">
-                        <div class="stain" style="width:${100 + Math.random()*200}px; height:${100 + Math.random()*200}px; top:${Math.random()*80}%; left:${Math.random()*80}%;"></div>
-                        ${p.carimbo ? `<div class="stamp" style="top:${40 + (i*15)}px; right:30px; transform:rotate(${i % 2 === 0 ? -15 : 12}deg);">${p.carimbo}</div>` : ''}
-                        <div class="text-center text-[10px] opacity-40 italic mb-4 tracking-[0.4em]">-- ${p.titulo} --</div>
+                        <div class="stain" style="width:${80 + Math.random()*150}px; height:${80 + Math.random()*150}px; top:${Math.random()*80}%; left:${Math.random()*80}%;"></div>
+                        ${p.carimbo ? `<div class="stamp" style="top:${30 + (i*10)}px; right:15px; transform:rotate(${i % 2 === 0 ? -12 : 10}deg);">${p.carimbo}</div>` : ''}
+                        <div class="text-center text-[8px] opacity-40 italic mb-2 tracking-[0.2em]">-- ${p.titulo} --</div>
                         ${innerContent}
                     </div>`;
             }).join('');
@@ -413,7 +432,7 @@
                 else if (i < current) p.classList.add('turned');
             });
 
-            document.getElementById('pageCounter').textContent = `Fls. 0${current + 1} / 0${CONFIG.paginas.length}`;
+            document.getElementById('pageCounter').textContent = `FLS. 0${current + 1} / 0${CONFIG.paginas.length}`;
             document.getElementById('prevBtn').disabled = current === 0;
             document.getElementById('nextBtn').disabled = current === CONFIG.paginas.length - 1;
         }
